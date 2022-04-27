@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import lxml
 import csv
+import datetime
 
 with open('cities','r') as file:
     r = file.read().split('\n')
@@ -67,9 +68,9 @@ for c in r:
     all_days = all_days[:14]
     max_temp = max_temp[:14]
 
-    print ('\n\n\n',title)
-    for i in range(14):
-        print (f'{all_days[i].text} {all_dates[i].text} t max = {maxt[i]} t min = {mint[i]} {conditions[i]} , ветер {wind[i]} м/c , осадки {precips[i]} мм')
+    print ('\n\n\n',title + " загружена....")
+    # for i in range(14):
+    #     print (f'{all_days[i].text} {all_dates[i].text} t max = {maxt[i]} t min = {mint[i]} {conditions[i]} , ветер {wind[i]} м/c , осадки {precips[i]} мм')
 
     # Запись цсв файла, райтроу принимает только кортеж, получается записать только 1 столбец, нужно решить этот вопрос
 # newline = '' убрало лишнюю строку при записи, ура!
