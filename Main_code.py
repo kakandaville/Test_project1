@@ -72,11 +72,11 @@ for c in r:
         print (f'{all_days[i].text} {all_dates[i].text} t max = {maxt[i]} t min = {mint[i]} {conditions[i]} , ветер {wind[i]} м/c , осадки {precips[i]} мм')
 
     # Запись цсв файла, райтроу принимает только кортеж, получается записать только 1 столбец, нужно решить этот вопрос
-
-    with open(f'{title}.csv','w',encoding='utf-8') as file:
+# newline = '' убрало лишнюю строку при записи, ура!
+    with open(f'{title}.csv','w',encoding='utf-8',newline='') as file:
         writer = csv.writer(file)
         writer.writerow(
-            (
+            [
                 ' День недели ',
                 " Дата ",
                 " Максимальная температура ",
@@ -84,7 +84,7 @@ for c in r:
                 " Облачность" ,
                 " Ветер, м/c ",
                 ' Осадки,мм'
-            )
+            ]
         )
         for i in range(14):
             writer.writerow(
@@ -97,5 +97,5 @@ for c in r:
                 wind[i],
                 precips[i]
                 )
-            )
+            ,)
 
