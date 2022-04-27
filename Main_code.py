@@ -1,8 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import lxml
+import csv
 
-url = "https://www.gismeteo.ru/weather-michurinsk-4438/2-weeks/"
+url = input("Вставьте ссылку на страничку 2-недельного прогноза\n")
 
 
 
@@ -28,7 +29,7 @@ min_temp = soup.find_all(class_='mint')
 conditions_raw = soup.find_all(class_='weather-icon tooltip')
 wind_units = soup.find_all(class_='wind-unit unit unit_wind_m_s')
 precipitations = soup.find(class_='widget-row widget-row-precipitation-bars row-with-caption').find_all(class_='row-item')
-
+title = soup.find(class_='page-title').text
 
 precips = []
 
@@ -62,9 +63,35 @@ all_dates = all_dates[:14]
 all_days = all_days[:14]
 max_temp = max_temp[:14]
 
+print ('\n\n\n',title)
 for i in range(14):
     print (f'{all_days[i].text} {all_dates[i].text} t max = {maxt[i]} t min = {mint[i]} {conditions[i]} , ветер {wind[i]} м/c , осадки {precips[i]} мм')
 
+# Запись цсв файла, райтроу принимает только кортеж, получается записать только 1 столбец, нужно решить этот вопрос
 
-
+with open(f'{title}.csv','w',encoding='utf-8') as file:
+    writer = csv.writer(file)
+    writer.writerow(
+        (
+            ' День недели ',
+            " Дата ",
+            " Максимальная температура ",
+            " Минимальная температура ",
+            " Облачность" ,
+            " Ветер, м/c ",
+            ' Осадки,мм'
+        )
+    )
+    for i in range(14):
+        writer.writerow(
+            (
+            all_days[i].text,
+            all_dates[i].text,
+            maxt[i],
+            mint[i],
+            conditions[i],
+            wind[i],
+            precips[i]
+            )
+        )
 
